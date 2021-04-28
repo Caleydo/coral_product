@@ -1,0 +1,34 @@
+{
+  "name": "coral_product",
+  "description": "",
+  "homepage": "https://phovea.caleydo.org",
+  "version": "2.0.0",
+  "author": {
+    "name": "Patrick Adelberger",
+    "email": "patrick.adelberger@jku.at",
+    "url": "https://github.com/Caleydo"
+  },
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/Caleydo/coral_product/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Caleydo/coral_product.git"
+  },
+  "scripts": {
+    "build": "node build.js --skipTests",
+    "predist": "npm run build",
+    "dist": "mkdirp dist && cd build && tar cvzf ../dist/coral_product.tar.gz *"
+  },
+  "dependencies": {
+    "bluebird": "3.7.2",
+    "chalk": "3.0.0",
+    "fs-extra": "^9.1.0",
+    "generator-phovea": "^7",
+    "lodash": "4.17.15",
+    "yamljs": "0.3.0",
+    "yargs-parser": "18.0.0",
+    "yeoman-environment": "2.8.0"
+  }
+}

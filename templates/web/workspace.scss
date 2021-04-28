@@ -1,0 +1,30 @@
+@debug('import plugin scss variables');
+// import all variables scss
+// first default app
+@import "~coral/dist/scss/abstracts/variables";
+// then going up in the dependency tree from the default app
+@import "~tdp_core/dist/scss/abstracts/variables";
+@import "~phovea_clue/dist/scss/abstracts/variables";
+@import "~phovea_ui/dist/scss/abstracts/variables";
+@import "~phovea_security_flask/dist/scss/abstracts/variables";
+
+// then all other plugins in this workspace (excluding other apps)
+@import "~tdp_gene/dist/scss/abstracts/variables";
+@import "~tdp_publicdb/dist/scss/abstracts/variables";
+@import "~tourdino/dist/scss/abstracts/variables";
+@import "~@fortawesome/fontawesome-free/scss/variables";
+
+// import mixins
+@import "~@fortawesome/fontawesome-free/scss/mixins";
+@import "~tdp_core/dist/scss/abstracts/mixins";
+
+@debug('import plugin main scss');
+// all main scss (in opposite order of the variables scss
+@import "~tourdino/dist/scss/main";
+@import "~tdp_publicdb/dist/scss/main";
+@import "~tdp_gene/dist/scss/main";
+@import "~phovea_security_flask/dist/scss/main";
+@import "~phovea_ui/dist/scss/main";
+@import "~phovea_clue/dist/scss/main";
+@import "~tdp_core/dist/scss/main";
+@import "~coral/dist/scss/main";

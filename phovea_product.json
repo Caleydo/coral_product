@@ -1,0 +1,83 @@
+[
+  {
+    "type": "web",
+    "label": "coral_frontend",
+    "repo": "Caleydo/coral",
+    "branch": "master",
+    "additional": [
+      {
+        "name": "phovea_clue",
+        "repo": "phovea/phovea_clue",
+        "branch": "v7.0.0"
+      },
+      {
+        "name": "phovea_ui",
+        "repo": "phovea/phovea_ui",
+        "branch": "v6.0.0"
+      },
+      {
+        "name": "phovea_security_flask",
+        "repo": "phovea/phovea_security_flask",
+        "branch": "v7.0.0"
+      },
+      {
+        "name": "phovea_security_store_generated",
+        "repo": "datavisyn/phovea_security_store_generated",
+        "branch": "v9.0.0"
+      },
+      {
+        "name": "tdp_core",
+        "repo": "datavisyn/tdp_core",
+        "branch": "v11.1.0"
+      }
+    ]
+  },
+  {
+    "type": "api",
+    "label": "coral_backend",
+    "repo": "phovea/phovea_server",
+    "branch": "v7.0.0",
+    "additional": [
+      {
+        "name": "coral",
+        "repo": "Caleydo/coral",
+        "branch": "master"
+      },
+      {
+        "name": "phovea_security_flask",
+        "repo": "phovea/phovea_security_flask",
+        "branch": "v7.0.0"
+      },
+      {
+        "name": "phovea_security_store_generated",
+        "repo": "datavisyn/phovea_security_store_generated",
+        "branch": "v9.0.0"
+      },
+      {
+        "name": "phovea_data_redis",
+        "repo": "phovea/phovea_data_redis",
+        "branch": "v7.0.0"
+      },
+      {
+        "name": "phovea_data_mongo",
+        "repo": "phovea/phovea_data_mongo",
+        "branch": "v7.0.0"
+      },
+      {
+        "name": "phovea_clue",
+        "repo": "phovea/phovea_clue",
+        "branch": "v7.0.0"
+      },
+      {
+        "name": "tdp_core",
+        "repo": "datavisyn/tdp_core",
+        "branch": "v11.1.0"
+      },
+      {
+        "name": "tdp_publicdb",
+        "repo": "Caleydo/tdp_publicdb",
+        "branch": "keckelt/rem_dTiles_python_3.7"
+      }
+    ]
+  }
+]
