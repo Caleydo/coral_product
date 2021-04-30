@@ -26,9 +26,9 @@
     "chalk": "3.0.0",
     "fs-extra": "^9.1.0",
     "generator-phovea": "^7",
-    "lodash": "4.17.15",
+    "lodash": ">=4.17.19",
     "yamljs": "0.3.0",
-    "yargs-parser": "18.0.0",
+    "yargs-parser": ">=18.1.2",
     "yeoman-environment": "2.8.0"
   }
 }
