@@ -45,7 +45,7 @@ jobs:
           name: Login AWS ECR and DockerHub
           command: |
             . ~/venv/bin/activate
-            cat > ~/.dockercfg << EOF
+            cat > ~/.dockercfg \<< EOF
             {
               "https://index.docker.io/v1/": {
                 "auth": "$DOCKER_AUTH"
