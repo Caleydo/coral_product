@@ -3,27 +3,27 @@
     "type": "web",
     "label": "coral_frontend",
     "repo": "Caleydo/coral",
-    "branch": "main",
+    "branch": "develop",
     "additional": [
       {
         "name": "phovea_clue",
         "repo": "phovea/phovea_clue",
-        "branch": "v8.0.0"
+        "branch": "develop"
       },
       {
         "name": "phovea_ui",
         "repo": "phovea/phovea_ui",
-        "branch": "v7.1.0"
+        "branch": "develop"
       },
       {
         "name": "phovea_security_flask",
         "repo": "phovea/phovea_security_flask",
-        "branch": "v8.0.0"
+        "branch": "develop"
       },
       {
         "name": "phovea_security_store_generated",
         "repo": "datavisyn/phovea_security_store_generated",
-        "branch": "v10.0.0"
+        "branch": "develop"
       },
       {
         "name": "tdp_core",
@@ -33,7 +33,7 @@
       {
         "name": "tdp_matomo",
         "repo": "datavisyn/tdp_matomo",
-        "branch": "v7.0.0"
+        "branch": "develop"
       }
     ]
   },
@@ -41,7 +41,7 @@
     "type": "api",
     "label": "coral_backend",
     "repo": "phovea/phovea_server",
-    "branch": "v7.2.0",
+    "branch": "develop",
     "additional": [
       {
         "name": "coral",
@@ -51,27 +51,27 @@
       {
         "name": "phovea_security_flask",
         "repo": "phovea/phovea_security_flask",
-        "branch": "v8.0.0"
+        "branch": "develop"
       },
       {
         "name": "phovea_security_store_generated",
         "repo": "datavisyn/phovea_security_store_generated",
-        "branch": "v10.0.0"
+        "branch": "develop"
       },
       {
         "name": "phovea_data_redis",
         "repo": "phovea/phovea_data_redis",
-        "branch": "v7.2.0"
+        "branch": "develop"
       },
       {
         "name": "phovea_data_mongo",
         "repo": "phovea/phovea_data_mongo",
-        "branch": "v7.1.0"
+        "branch": "develop"
       },
       {
         "name": "phovea_clue",
         "repo": "phovea/phovea_clue",
-        "branch": "v8.0.0"
+        "branch": "develop"
       },
       {
         "name": "tdp_core",
@@ -81,7 +81,7 @@
       {
         "name": "tdp_matomo",
         "repo": "datavisyn/tdp_matomo",
-        "branch": "v7.0.0"
+        "branch": "develop"
       },
       {
         "name": "tdp_publicdb",
