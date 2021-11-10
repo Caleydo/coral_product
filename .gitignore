@@ -7,14 +7,16 @@ package-lock.json
 
 # ... except all files relevant for the product build
 !/.circleci/
-!/.circleci/**/*
-!/.github/
-!/.github/**/*
+!/.github
 !templates/
 !templates/web/
-!templates/web/**/*
+!templates/web/deploy
+!templates/web/deploy/web
+!templates/web/deploy/web/*
 !templates/api/
-!templates/api/**/*
+!templates/api/deploy
+!templates/api/deploy/api
+!templates/api/deploy/api/*
 !.editorconfig
 !.gitattributes
 !.yo-rc.json
@@ -27,10 +29,3 @@ package-lock.json
 !Jenkinsfile
 !docker_script.sh
 !docker-compose-patch.*
-
-# Cypress
-!cypress.json
-!cypress/
-!cypress/**
-cypress/screenshots/*
-cypress/videos/*

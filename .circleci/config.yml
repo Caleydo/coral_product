@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/phovea
     docker:
-      - image: circleci/python:3.7-buster-node-browsers # for node version see Dockerfile on https://hub.docker.com/r/circleci/python
+      - image: circleci/python:3.7.11-buster-node-browsers # for node version see Dockerfile on https://hub.docker.com/r/circleci/python
     steps:
       - checkout
       - setup_remote_docker
@@ -18,12 +18,12 @@ jobs:
             python --version
             pip --version
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency1-cache-{{ checksum "package.json" }}
       - run:
           name: Install npm dependencies
           command: npm install
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency1-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
       - run:
@@ -45,7 +45,7 @@ jobs:
           name: Login AWS ECR and DockerHub
           command: |
             . ~/venv/bin/activate
-            cat > ~/.dockercfg \<< EOF
+            cat > ~/.dockercfg << EOF
             {
               "https://index.docker.io/v1/": {
                 "auth": "$DOCKER_AUTH"
@@ -68,7 +68,7 @@ jobs:
               ;;
             esac
             echo "using tag: --${awsTag}--"
-            node build.js --skipSaveImage --skipTests --noDefaultTags --pushExtra=${awsTag} --pushTo=922145058410.dkr.ecr.eu-central-1.amazonaws.com/caleydo
+            node build.js --skipSaveImage --useSSH --skipTests --noDefaultTags --pushExtra=${awsTag} --pushTo=922145058410.dkr.ecr.eu-central-1.amazonaws.com/caleydo
       - store_artifacts:
           path: build
           destination: build

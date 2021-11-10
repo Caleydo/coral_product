@@ -11,7 +11,7 @@ To ease the set up process, this repository describes all required components fo
 
 | [Coral Branch](https://github.com/Caleydo/coral/branches)          | app                                          | status   |
 |-----------------------|----------------------------------------------|----------|
-| [master](https://github.com/Caleydo/coral)                | https://coral.caleydoapp.org                 | [![CircleCI](https://circleci.com/gh/Caleydo/coral_product.svg?style=svg)](https://circleci.com/gh/Caleydo/coral_product)  |
+| [main](https://github.com/Caleydo/coral)                | https://coral.caleydoapp.org                 | [![CircleCI](https://circleci.com/gh/Caleydo/coral_product.svg?style=svg)](https://circleci.com/gh/Caleydo/coral_product)  |
 | [develop](https://github.com/Caleydo/coral/tree/develop)               | https://coral-daily.caleydoapp.org           | [![CircleCI](https://circleci.com/gh/Caleydo/coral_product/tree/develop.svg?style=svg)](https://circleci.com/gh/Caleydo/coral_product?branch=develop)  |
 
 A running Coral instance consists of:

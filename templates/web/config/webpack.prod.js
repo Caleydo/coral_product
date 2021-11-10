@@ -157,6 +157,17 @@ const config = {
                 use: ['source-map-loader'],
                 exclude: /[\\/]node_modules[\\/](lineupjs|lineupengine)[\\/]/
             },
+            {
+              test: /node_modules\/vega-lite.*\.js$/,
+              use: {
+                loader: 'babel-loader',
+                options: {
+                  presets: [
+                    ['@babel/preset-env', { targets: "defaults" }]
+                  ]
+                }
+              }
+            },
             {test: /\.(xml)$/, use: 'xml-loader'},
             {test: /\.(txt)$/, use: 'raw-loader'},
             {test: /\.(html)$/, use: 'html-loader'},
@@ -223,7 +234,8 @@ const config = {
                     name(module) {
                         const key = Object.keys(mergedVendors).find((key) => vendorRegex[key].test(module.context));
                         return key ? key : 'vendors';
-                    }
+                    },
+                    enforce: true // fix "ERROR in chunk vendors; vendors.css; Cannot read property 'pop' of undefined", also see: https://github.com/webpack-contrib/mini-css-extract-plugin/issues/257
                 }
             }
         },
