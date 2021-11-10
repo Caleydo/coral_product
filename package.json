@@ -28,7 +28,7 @@
     "generator-phovea": "github:phovea/generator-phovea#thinkh/438_switch-to-dart-sass",
     "lodash": ">=4.17.21",
     "yamljs": "0.3.0",
-    "yargs-parser": "18.0.0",
+    "yargs-parser": ">=18.1.2",
     "yeoman-environment": "2.8.0"
   }
 }
