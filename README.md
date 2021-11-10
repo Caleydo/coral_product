@@ -53,7 +53,7 @@ Follow the steps below the set up a workspace with the above components.
  "tdp_publicdb" : {
    "dburl": "postgresql://read_user:password@postgres.db.url/database_name"
   },
-  "cohort": {
+  "coral": {
     "dburl": "postgresql://read_write_user:password@postgres.db.url/database_name"
   }
 }
