@@ -106,6 +106,16 @@ jobs:
           failure_message: ':skull_and_crossbones: Running _$CIRCLE_JOB job_ for _$CIRCLE_PROJECT_REPONAME $CIRCLE_BRANCH branch_ has failed!'
 workflows:
   version: 2
+  build-nightly:
+    triggers:
+      - schedule:
+          cron: "45 0 * * 1-5" # "At 00:45 on every day-of-week from Monday through Friday.”, see: https://crontab.guru/#45_0_*_*_1-5
+          filters:
+            branches:
+              only:
+                - develop
+    jobs:
+      - build
   build-branch:
     jobs:
       - build:
@@ -122,3 +132,4 @@ workflows:
               only: /^v.*/
 orbs:
   slack: circleci/slack@3.4.2
+
