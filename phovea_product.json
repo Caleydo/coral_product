@@ -3,37 +3,17 @@
     "type": "web",
     "label": "coral_frontend",
     "repo": "Caleydo/coral",
-    "branch": "develop",
+    "branch": "visyn",
     "additional": [
-      {
-        "name": "phovea_clue",
-        "repo": "phovea/phovea_clue",
-        "branch": "develop"
-      },
-      {
-        "name": "phovea_ui",
-        "repo": "phovea/phovea_ui",
-        "branch": "develop"
-      },
-      {
-        "name": "phovea_security_flask",
-        "repo": "phovea/phovea_security_flask",
-        "branch": "develop"
-      },
       {
         "name": "phovea_security_store_generated",
         "repo": "datavisyn/phovea_security_store_generated",
-        "branch": "develop"
+        "branch": "visyn"
       },
       {
         "name": "tdp_core",
         "repo": "datavisyn/tdp_core",
-        "branch": "develop"
-      },
-      {
-        "name": "tdp_matomo",
-        "repo": "datavisyn/tdp_matomo",
-        "branch": "develop"
+        "branch": "visyn"
       }
     ]
   },
@@ -46,47 +26,22 @@
       {
         "name": "coral",
         "repo": "Caleydo/coral",
-        "branch": "main"
-      },
-      {
-        "name": "phovea_security_flask",
-        "repo": "phovea/phovea_security_flask",
-        "branch": "develop"
+        "branch": "visyn"
       },
       {
         "name": "phovea_security_store_generated",
         "repo": "datavisyn/phovea_security_store_generated",
-        "branch": "develop"
-      },
-      {
-        "name": "phovea_data_redis",
-        "repo": "phovea/phovea_data_redis",
-        "branch": "develop"
-      },
-      {
-        "name": "phovea_data_mongo",
-        "repo": "phovea/phovea_data_mongo",
-        "branch": "develop"
-      },
-      {
-        "name": "phovea_clue",
-        "repo": "phovea/phovea_clue",
-        "branch": "develop"
+        "branch": "visyn"
       },
       {
         "name": "tdp_core",
         "repo": "datavisyn/tdp_core",
-        "branch": "develop"
-      },
-      {
-        "name": "tdp_matomo",
-        "repo": "datavisyn/tdp_matomo",
-        "branch": "develop"
+        "branch": "visyn"
       },
       {
         "name": "tdp_publicdb",
         "repo": "Caleydo/tdp_publicdb",
-        "branch": "keckelt/rem_dTiles"
+        "branch": "visyn_rem_dTiles_python"
       }
     ]
   }
