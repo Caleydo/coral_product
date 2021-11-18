@@ -50,6 +50,7 @@ Follow the steps below the set up a workspace with the above components.
 5. The database credentials and location are not included in the repositories. Provde them via the `config.jon` file at the root of the workspace:
 
 ```json
+ {
  "tdp_publicdb" : {
    "dburl": "postgresql://read_user:password@postgres.db.url/database_name"
   },
