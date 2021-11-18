@@ -3,7 +3,7 @@
     "type": "web",
     "label": "coral_frontend",
     "repo": "Caleydo/coral",
-    "branch": "visyn",
+    "branch": "develop",
     "additional": [
       {
         "name": "phovea_security_store_generated",
@@ -26,7 +26,7 @@
       {
         "name": "coral",
         "repo": "Caleydo/coral",
-        "branch": "visyn"
+        "branch": "develop"
       },
       {
         "name": "phovea_security_store_generated",
@@ -41,7 +41,7 @@
       {
         "name": "tdp_publicdb",
         "repo": "Caleydo/tdp_publicdb",
-        "branch": "visyn_rem_dTiles_python"
+        "branch": "keckelt/rem_dTiles"
       }
     ]
   }
