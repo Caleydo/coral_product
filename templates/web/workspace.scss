@@ -1,17 +1,17 @@
 // Import custom theme variables and bootstrap variables overrides
-@import "~phovea_ui/dist/scss/themes/phovea";
+@import "~tdp_core/dist/scss/themes/phovea";
 @import "~coral/dist/scss/themes/coral";
 // @import "~tdp_core/dist/scss/themes/datavisyn";
 
 // Include remainder of required Bootstrap stylesheets
-@import "~phovea_ui/dist/scss/vendors/bootstrap/1_variables_mixins_utilities";
+@import "~tdp_core/dist/scss/vendors/bootstrap/1_variables_mixins_utilities";
 
 // map-merge my theme-colors
 // @import "~coral/dist/scss/vendors/bootstrap_modify_maps";
 @import "~ordino/dist/scss/vendors/bootstrap_modify_maps";
 
 // Include all Bootstrap components as needed
-@import "~phovea_ui/dist/scss/vendors/bootstrap/2_components";
+@import "~tdp_core/dist/scss/vendors/bootstrap/2_components";
 
 // import all variables scss
 // first default app
@@ -19,9 +19,6 @@
 // then going up in the dependency tree from the default app
 @import "~ordino/dist/scss/abstracts/variables";
 @import "~tdp_core/dist/scss/abstracts/variables";
-@import "~phovea_clue/dist/scss/abstracts/variables";
-@import "~phovea_ui/dist/scss/abstracts/variables";
-@import "~phovea_security_flask/dist/scss/abstracts/variables";
 
 // then all other plugins in this workspace (excluding other apps)
 @import "~tdp_gene/dist/scss/abstracts/variables";
@@ -38,9 +35,6 @@
 @import "~tourdino/dist/scss/main";
 @import "~tdp_publicdb/dist/scss/main";
 @import "~tdp_gene/dist/scss/main";
-@import "~phovea_security_flask/dist/scss/main";
-@import "~phovea_ui/dist/scss/main";
-@import "~phovea_clue/dist/scss/main";
 @import "~tdp_core/dist/scss/main";
 @import "~ordino/dist/scss/main";
 @import "~coral/dist/scss/main";

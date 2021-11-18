@@ -427,7 +427,7 @@ function patchWorkspace(p) {
     fs.copyFileSync('./phovea.js', p.tmpDir + '/phovea.js');
 
     registry += `\n\n
-     import {register} from 'phovea_core/src/plugin';
+     import {register} from 'tdp_core/src/plugin';
      register('__product',require('./phovea.js'));
      `;
     fs.writeFileSync(p.tmpDir + '/phovea_registry.js', registry);
