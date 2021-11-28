@@ -28,7 +28,7 @@
       {
         "name": "tdp_core",
         "repo": "datavisyn/tdp_core",
-        "branch": "develop"
+        "branch": "v12.1.2"
       },
       {
         "name": "tdp_matomo",
@@ -76,7 +76,7 @@
       {
         "name": "tdp_core",
         "repo": "datavisyn/tdp_core",
-        "branch": "develop"
+        "branch": "v12.1.2"
       },
       {
         "name": "tdp_matomo",
