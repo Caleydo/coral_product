@@ -3,7 +3,7 @@
     "type": "web",
     "label": "coral_frontend",
     "repo": "Caleydo/coral",
-    "branch": "update_master",
+    "branch": "main",
     "additional": [
       {
         "name": "phovea_security_store_generated",
@@ -26,7 +26,7 @@
       {
         "name": "coral",
         "repo": "Caleydo/coral",
-        "branch": "update_master"
+        "branch": "main"
       },
       {
         "name": "phovea_security_store_generated",
