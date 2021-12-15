@@ -92,14 +92,14 @@ jobs:
             tasksExists=$(aws --output text ecs list-task-definitions --family-prefix ${awsFamily})
             echo "existsTaskDefinition? --${tasksExists}--"
             if [ ! -z "$tasksExists" ]; then
-              isTaskRunning=$(aws --output text ecs list-tasks --cluster caleydo --family ${awsFamily})
+              isTaskRunning=$(aws --output text ecs list-tasks --cluster JKU_ASG_Cluster --family ${awsFamily})
               echo "isTaskRunning? --${isTaskRunning}--"
               if [ ! -z "$isTaskRunning" ]; then
                 taskId=$(echo "${isTaskRunning}" | cut -f2)
                 echo "taskId--${taskId}--"
-                aws --output text ecs stop-task --cluster caleydo --task ${taskId}
+                aws --output text ecs stop-task --cluster JKU_ASG_Cluster --task ${taskId}
               fi
-              aws --output text ecs run-task --cluster caleydo --task-definition ${awsFamily} --started-by CircleCIAutoUpdate
+              aws --output text ecs run-task --cluster JKU_ASG_Cluster --task-definition ${awsFamily} --started-by CircleCIAutoUpdate
             fi
       - slack/status:
           success_message: ':tada: Running _$CIRCLE_JOB job_ for _$CIRCLE_PROJECT_REPONAME $CIRCLE_BRANCH branch_ has succeeded!'
