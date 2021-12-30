@@ -7,7 +7,7 @@ executors:
       - image: circleci/python:3.7.11-buster-node-browsers # for node version see Dockerfile on https://hub.docker.com/r/circleci/python
 
 orbs:
-  aws-ecr: circleci/aws-ecr@6.15.3
+  aws-ecr: circleci/aws-ecr@7.3.0
   slack: circleci/slack@3.4.2
 
 jobs:
