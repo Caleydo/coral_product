@@ -1,12 +1,22 @@
 version: 2.1
-jobs:
-  build:
+
+executors:
+  node-executor:
     working_directory: ~/phovea
     docker:
       - image: circleci/python:3.7.11-buster-node-browsers # for node version see Dockerfile on https://hub.docker.com/r/circleci/python
+
+orbs:
+  aws-ecr: circleci/aws-ecr@6.15.3
+  slack: circleci/slack@3.4.2
+
+jobs:
+  build:
+    executor: node-executor
     steps:
       - checkout
       - setup_remote_docker
+      - aws-ecr/ecr-login
       - run:
           name: Show Node.js and npm version
           command: |
@@ -18,47 +28,16 @@ jobs:
             python --version
             pip --version
       - restore_cache:
-          key: dependency1-cache-{{ checksum "package.json" }}
+          key: deps1-{{ .Branch }}-{{ checksum "package.json" }}      
       - run:
           name: Install npm dependencies
           command: npm install
       - save_cache:
-          key: dependency1-cache-{{ checksum "package.json" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: Show installed npm dependencies
-          command: npm list --depth=1 || true
-      - restore_cache:
-          key: awscli-1.16.312
-      - run:
-          name: Install AWS CLI
-          command: |
-            virtualenv ~/venv
-            . ~/venv/bin/activate
-            pip install awscli==1.16.312
-      - save_cache:
-          key: awscli-1.16.312
-          paths:
-          - ~/venv
-      - run:
-          name: Login AWS ECR and DockerHub
-          command: |
-            . ~/venv/bin/activate
-            cat > ~/.dockercfg \<< EOF
-            {
-              "https://index.docker.io/v1/": {
-                "auth": "$DOCKER_AUTH"
-              }
-            }
-            EOF
-            export AWS_DEFAULT_REGION=eu-central-1
-            login="$(aws ecr get-login --no-include-email)"
-            ${login}
-      - run:
+          key: deps1-{{ .Branch }}-{{ checksum "package.json" }}
+          paths: ./node_modules          
+      - deploy:
           name: Build and deploy
           command: |
-            . ~/venv/bin/activate
             case "${CIRCLE_BRANCH}${CIRCLE_TAG}" in
             master)
               awsTag="latest"
@@ -68,23 +47,19 @@ jobs:
               ;;
             esac
             echo "using tag: --${awsTag}--"
-            node build.js --skipSaveImage --useSSH --skipTests --noDefaultTags --pushExtra=${awsTag} --pushTo=478950388974.dkr.ecr.eu-central-1.amazonaws.com/caleydo
+            node build.js --injectVersion --skipSaveImage --useSSH --skipTests --noDefaultTags --pushExtra=${awsTag} --pushTo=478950388974.dkr.ecr.eu-central-1.amazonaws.com/caleydo
       - store_artifacts:
           path: build
           destination: build
       - deploy:
           name: Cleanup untagged AWS repositories
           command: |
-            . ~/venv/bin/activate
-            export AWS_DEFAULT_REGION=eu-central-1
             baseName=${CIRCLE_PROJECT_REPONAME%_product}
             # list repos filter to just the one of this product and delete untagged ones
             aws ecr describe-repositories --output text | cut -f6 | grep "caleydo/${baseName}" | while read line; do aws ecr list-images --repository-name $line --filter tagStatus=UNTAGGED --query 'imageIds[*]' --output text | while read imageId; do aws ecr batch-delete-image --output text --repository-name $line --image-ids imageDigest=$imageId; done; done
       - deploy:
           name: Restart AWS task # assumes the task definition is called <reponame>-<branch>
           command: |
-            . ~/venv/bin/activate
-            export AWS_DEFAULT_REGION=eu-central-1
             # cleanup name by removing the _product suffix
             baseName=${CIRCLE_PROJECT_REPONAME%_product}
             awsFamily="${baseName}-${CIRCLE_BRANCH//\//_}" # replace `/` with `_` in branch name
@@ -105,7 +80,7 @@ jobs:
           success_message: ':tada: Running _$CIRCLE_JOB job_ for _$CIRCLE_PROJECT_REPONAME $CIRCLE_BRANCH branch_ has succeeded!'
           failure_message: ':skull_and_crossbones: Running _$CIRCLE_JOB job_ for _$CIRCLE_PROJECT_REPONAME $CIRCLE_BRANCH branch_ has failed!'
 workflows:
-  version: 2
+  version: 2.1
   build-nightly:
     triggers:
       - schedule:
@@ -119,17 +94,19 @@ workflows:
   build-branch:
     jobs:
       - build:
+          context:
+              - org-global
           filters:
             tags:
               ignore: /^v.*/
   build-tag:
     jobs:
       - build:
+          context:
+              - org-global
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /^v.*/
 orbs:
-  slack: circleci/slack@3.4.2
-
