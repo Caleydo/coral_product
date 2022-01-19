@@ -2,9 +2,14 @@
   {
     "type": "web",
     "label": "coral_frontend",
-    "repo": "Caleydo/coral",
+    "repo": "Caleydo/coral_public",
     "branch": "develop",
     "additional": [
+      {
+        "name": "coral",
+        "repo": "Caleydo/coral",
+        "branch": "develop"
+      },
       {
         "name": "phovea_security_store_generated",
         "repo": "datavisyn/phovea_security_store_generated",
