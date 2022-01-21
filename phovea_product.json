@@ -3,7 +3,7 @@
     "type": "web",
     "label": "coral_frontend",
     "repo": "Caleydo/coral_public",
-    "branch": "develop",
+    "branch": "och/coral-customization",
     "additional": [
       {
         "name": "coral",
