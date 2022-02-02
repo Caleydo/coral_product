@@ -187,17 +187,6 @@ const config = {
                 use: ['source-map-loader'],
                 exclude: /[\\/]node_modules[\\/](lineupjs|lineupengine)[\\/]/
             },
-            {
-              test: /node_modules\/vega-lite.*\.js$/,
-              use: {
-                loader: 'babel-loader',
-                options: {
-                  presets: [
-                    ['@babel/preset-env', { targets: "defaults" }]
-                  ]
-                }
-              }
-            },
             {test: /\.(xml)$/, use: 'xml-loader'},
             {test: /\.(txt)$/, use: 'raw-loader'},
             {test: /\.(html)$/, use: 'html-loader'},

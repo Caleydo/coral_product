@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 //for debugging issues
 //const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 //helper module
@@ -13,31 +14,38 @@ const webpack = require('webpack');
 const resolve = require('path').resolve;
 const workspacePath = resolve(__dirname, '../');
 const now = new Date();
+const year = (new Date()).getFullYear();
 const prefix = (n) => n < 10 ? ('0' + n) : n.toString();
 const buildId = `${now.getUTCFullYear()}${prefix(now.getUTCMonth() + 1)}${prefix(now.getUTCDate())}-${prefix(now.getUTCHours())}${prefix(now.getUTCMinutes())}${prefix(now.getUTCSeconds())}`;
-const envMode = 'development'; //hard coded for nightly build
+const envMode = process.argv.indexOf('--mode') >= 0 ? process.argv[process.argv.indexOf('--mode') + 1].trim().toLowerCase() : 'production';
 const isDev = envMode === 'development';
 //workspace constants
 const workspaceYoRcFile = require(path.join(workspacePath, '.yo-rc-workspace.json'));
+const workspacePkg = require(path.join(workspacePath, 'package.json'));
 const workspaceBuildInfoFile = path.join(workspacePath, 'package-lock.json');
 const workspaceMetaDataFile = path.join(workspacePath, 'metaData.json');
 const workspaceRegistryFile = path.join(workspacePath, 'phovea_registry.js');
 const workspaceAliases = workspaceYoRcFile.workspaceAliases || [];
 const workspaceRegistry = workspaceYoRcFile.registry || [];
-const workspaceVendors = workspaceYoRcFile.vendors || [];
 const workspaceName = workspacePath.substr(workspacePath.lastIndexOf('/') + 1);
-const workspaceProxy = workspaceYoRcFile.devServerProxy || {};
 const workspaceRepos = workspaceYoRcFile.frontendRepos || [];
+const workspaceMaxChunkSize = workspaceYoRcFile.maxChunkSize || 5000000;
 //app constants
 const envApp = process.argv.filter((e) => e.startsWith('--app='));
 const defaultApp = envApp.length > 0 ? envApp[0].substring(6).trim() : workspaceYoRcFile.defaultApp;
 const defaultAppPath = path.join(workspacePath, defaultApp);
 const appPkg = require(path.join(defaultAppPath, 'package.json'));
+appPkg.version = appPkg.version.replace('SNAPSHOT', buildId);
 const libName = appPkg.name;
 const libDesc = appPkg.description;
-const {entries, registry, vendors, libraryAliases, filesToLoad, copyFiles} = require(path.join(defaultAppPath, '.yo-rc.json'))['generator-phovea'];
+const {entries, registry, libraryAliases, filesToLoad, copyFiles} = require(path.join(defaultAppPath, '.yo-rc.json'))['generator-phovea'];
 const fileLoaderRegex = filesToLoad && filesToLoad['file-loader'] ? RegExp(String.raw`(.*)\/(${filesToLoad['file-loader']})\.(html|txt)$`) : RegExp(/^$/);
 const copyAppFiles = copyFiles ? copyFiles.map((file) => ({from: path.join(defaultAppPath, file), to: path.join(workspacePath, 'bundles', path.basename(file)) })) : [];
+//banner info
+const banner = '/*! ' + (appPkg.title || appPkg.name) + ' - v' + appPkg.version + ' - ' + year + '\n' +
+    (appPkg.homepage ? '* ' + appPkg.homepage + '\n' : '') +
+    '* Copyright (c) ' + year + ' ' + appPkg.author.name + ';' +
+    ' Licensed ' + appPkg.license + '*/\n';
 // Merge app and workspace properties
 const mergedAliases = {
     ...libraryAliases,
@@ -47,22 +55,8 @@ const mergedRegistry = {
     ...registry,
     ...workspaceRegistry
 };
-const mergedVendors = {
-    ...vendors,
-    ...workspaceVendors
-};
 // Regex for cacheGroups
 const workspaceRegex = new RegExp(String.raw`[\\/]${workspaceName}[\\/](${workspaceRepos.join('|')})[\\/]`);
-const vendorRegex = Object.assign({},
-    ...Object.entries(mergedVendors).
-        map((item) => ({[item[0]]: new RegExp(`[\\/]node_modules[\\/](${item[1]})`)})
-        )
-);
-const vendorWorkspaceRegex = Object.assign({},
-    ...Object.entries(mergedVendors).
-        map((item) => ({[item[0]]: new RegExp(`[\\/]${workspaceName}[\\/](${item[1]})`)})
-        )
-);
 // html webpack entries
 let HtmlWebpackPlugins = [];
 Object.values(entries).map(function (entry) {
@@ -96,27 +90,26 @@ const includeFeature = mergedRegistry ? (extension, id) => {
 //webpack config
 const config = {
     mode: envMode,
-    devtool: 'inline-source-map',
     output: {
+        filename: '[name].js',
+        chunkFilename: '[name].js',
         path: path.join(workspacePath, 'bundles'),
-        filename: '[name].[contenthash].js',
+        pathinfo: false,
         publicPath: '',
         library: libName,
         libraryTarget: 'umd',
-        umdNamedDefine: isDev
+        umdNamedDefine: true
     },
     entry: webpackHelper.injectRegistry(workspacePath, defaultAppPath, [workspaceRegistryFile], entries),
     resolve: {
-        cacheWithContext: false, //for performance: we don't use context specific plugins
-        symlinks: false, //don't need symlinks because of alias for workspace
         extensions: ['.js'],
         alias:
             Object.assign({},
-                ...workspaceRepos.map((item) => ({[item]: (workspacePath + `/${item}`)})),
-                ...Object.entries(mergedAliases).map((item) => ({[item[0]]: path.join(workspacePath, 'node_modules', item[1])}))
+              ...workspaceRepos.map((item) => ({[item]: (workspacePath + `/${item}`)})),
+              ...Object.entries(mergedAliases).map((item) => ({[item[0]]: path.join(workspacePath, 'node_modules', item[1])}))
             ),
         modules: [
-            path.join(workspacePath, 'node_modules')
+          path.join(workspacePath, 'node_modules')
         ],
     },
     module: {
@@ -151,23 +144,6 @@ const config = {
                     MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'
                 ]
             },
-            {
-                test: /\.js$/,
-                enforce: 'pre',
-                use: ['source-map-loader'],
-                exclude: /[\\/]node_modules[\\/](lineupjs|lineupengine)[\\/]/
-            },
-            {
-              test: /node_modules\/vega-lite.*\.js$/,
-              use: {
-                loader: 'babel-loader',
-                options: {
-                  presets: [
-                    ['@babel/preset-env', { targets: "defaults" }]
-                  ]
-                }
-              }
-            },
             {test: /\.(xml)$/, use: 'xml-loader'},
             {test: /\.(txt)$/, use: 'raw-loader'},
             {test: /\.(html)$/, use: 'html-loader'},
@@ -201,44 +177,45 @@ const config = {
     },
     optimization: {
         nodeEnv: false, // will be set by DefinePlugin
-        minimize: !isDev, // minimize production only
-        namedModules: isDev, // named for dev build
-        namedChunks: isDev, // named for dev build
-        removeAvailableModules: !isDev, // in prod only
+        minimize: true, // only in prod mode
+        minimizer: [
+            new CssMinimizerPlugin()
+          ],
+        namedModules: false, // only in prod mode
+        namedChunks: false, // only in prod mode
+        removeAvailableModules: true, // only in prod mode
         removeEmptyChunks: true, // should always be set to true
         mergeDuplicateChunks: true, // should always be set to true
         providedExports: true, // should always be set to true
         usedExports: true, // should always be set to true
         sideEffects: true, // should always be set to true as long as we don't change our code
         portableRecords: false, // should always be set to false
-        flagIncludedChunks: !isDev, // in prod only
-        occurrenceOrder: !isDev, // in prod only
-        concatenateModules: !isDev, // in prod only
+        flagIncludedChunks: true, // only in prod mode
+        occurrenceOrder: true, // only in prod mode
+        concatenateModules: true, // only in prod mode
         moduleIds: 'hashed',
-        chunkIds: isDev ? 'named' : 'total-size', // only in dev mode
+        chunkIds: 'total-size', // only in prod mode
         runtimeChunk: 'single', //one runtime instance for all entries
         splitChunks: {
             chunks: 'all',
+            minSize: 10000,
+            maxSize: workspaceMaxChunkSize,
             cacheGroups: {
                 workspace: {
                     test: workspaceRegex,
                     priority: -5,
-                    name(module) {
-                        const key = Object.keys(mergedVendors).find((key) => vendorWorkspaceRegex[key].test(module.context));
-                        return key ? key : 'workspace';
-                    }
+                    name: 'vendor',
+                    enforce: true,
                 },
                 vendors: {
                     test: /[\\/]node_modules[\\/]/,
                     priority: -10,
-                    name(module) {
-                        const key = Object.keys(mergedVendors).find((key) => vendorRegex[key].test(module.context));
-                        return key ? key : 'vendors';
-                    },
-                    enforce: true // fix "ERROR in chunk vendors; vendors.css; Cannot read property 'pop' of undefined", also see: https://github.com/webpack-contrib/mini-css-extract-plugin/issues/257
+                    name: 'vendor',
+                    enforce: true,
                 }
+
             }
-        },
+        }
     },
     plugins: [
         new CleanWebpackPlugin({
@@ -247,8 +224,8 @@ const config = {
                 path.join(workspacePath, 'bundles/**/*')
             ]
         }),
-        ...HtmlWebpackPlugins,
         new MiniCssExtractPlugin(),
+        ...HtmlWebpackPlugins,
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(envMode),
             'process.env.__VERSION__': JSON.stringify(appPkg.version),
@@ -271,7 +248,11 @@ const config = {
                     from: workspaceMetaDataFile, to: path.join(workspacePath, 'bundles', 'phoveaMetaData.json'),
                     //generate meta data file
                     transform() {
-                        return webpackHelper.generateMetaDataFile(defaultAppPath, {buildId});
+                        const customProperties = {
+                          buildId,
+                          version: workspacePkg.version // override app version with workspace version in product build
+                        };
+                        return webpackHelper.generateMetaDataFile(defaultAppPath, customProperties);
                     }
                 },
                 //use package-lock json as buildInfo
@@ -284,12 +265,12 @@ const config = {
             analyzerMode: 'disabled',
             generateStatsFile: true,
             statsOptions: {source: false}
-        })*/
-    ],
-    stats: {
-        //for source-map-loader: lineup/js warnings
-        warningsFilter: [/Failed to parse source map/],
-    }
+        }),*/
+        new webpack.BannerPlugin({
+            banner: banner,
+            raw: true
+        })
+    ]
 };
 //console.log(JSON.stringify(config, null, '\t'));
 module.exports = config;
