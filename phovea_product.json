@@ -46,7 +46,7 @@
       {
         "name": "tdp_publicdb",
         "repo": "Caleydo/tdp_publicdb",
-        "branch": "keckelt/rem_dTiles"
+        "branch": "develop"
       }
     ]
   }
