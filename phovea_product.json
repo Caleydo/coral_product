@@ -2,18 +2,23 @@
   {
     "type": "web",
     "label": "coral_frontend",
-    "repo": "Caleydo/coral",
+    "repo": "Caleydo/coral_public",
     "branch": "main",
     "additional": [
       {
+        "name": "coral",
+        "repo": "Caleydo/coral",
+        "branch": "main"
+      },
+      {
         "name": "phovea_security_store_generated",
         "repo": "datavisyn/phovea_security_store_generated",
-        "branch": "develop"
+        "branch": "v10.0.0"
       },
       {
         "name": "tdp_core",
         "repo": "datavisyn/tdp_core",
-        "branch": "develop"
+        "branch": "v13.0.0"
       }
     ]
   },
@@ -31,17 +36,17 @@
       {
         "name": "phovea_security_store_generated",
         "repo": "datavisyn/phovea_security_store_generated",
-        "branch": "develop"
+        "branch": "v10.0.0"
       },
       {
         "name": "tdp_core",
         "repo": "datavisyn/tdp_core",
-        "branch": "develop"
+        "branch": "v13.0.0"
       },
       {
         "name": "tdp_publicdb",
         "repo": "Caleydo/tdp_publicdb",
-        "branch": "keckelt/rem_dTiles"
+        "branch": "v10.0.0"
       }
     ]
   }

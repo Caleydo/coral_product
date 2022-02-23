@@ -9,7 +9,7 @@ package-lock.json
 !/.circleci/
 !/.github
 !templates/
-!templates/web/
+!templates/web/*
 !templates/web/config
 !templates/web/config/*
 !templates/web/deploy
