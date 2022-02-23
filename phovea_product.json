@@ -46,7 +46,7 @@
       {
         "name": "tdp_publicdb",
         "repo": "Caleydo/tdp_publicdb",
-        "branch": "v10.0.0"
+        "branch": "develop"
       }
     ]
   }
