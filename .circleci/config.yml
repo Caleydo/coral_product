@@ -55,7 +55,7 @@ jobs:
             export AWS_DEFAULT_REGION=eu-central-1
             login="$(aws ecr get-login --no-include-email)"
             ${login}
-      - run:
+      - deploy:
           name: Build and deploy
           command: |
             . ~/venv/bin/activate
@@ -115,16 +115,22 @@ workflows:
               only:
                 - develop
     jobs:
-      - build
+      - build:
+          context:
+            - org-global  
   build-branch:
     jobs:
       - build:
+          context:
+            - org-global
           filters:
             tags:
               ignore: /^v.*/
   build-tag:
     jobs:
       - build:
+          context:
+            - org-global
           filters:
             branches:
               ignore: /.*/
@@ -132,4 +138,3 @@ workflows:
               only: /^v.*/
 orbs:
   slack: circleci/slack@3.4.2
-
