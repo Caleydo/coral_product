@@ -18,7 +18,7 @@
       {
         "name": "tdp_core",
         "repo": "datavisyn/tdp_core",
-        "branch": "v13.0.0"
+        "branch": "develop"
       }
     ]
   },
@@ -41,7 +41,7 @@
       {
         "name": "tdp_core",
         "repo": "datavisyn/tdp_core",
-        "branch": "v13.0.0"
+        "branch": "develop"
       },
       {
         "name": "tdp_publicdb",
