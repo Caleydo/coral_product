@@ -13,7 +13,7 @@
       {
         "name": "phovea_security_store_generated",
         "repo": "datavisyn/phovea_security_store_generated",
-        "branch": "v11.0.0"
+        "branch": "master"
       },
       {
         "name": "tdp_core",
@@ -36,7 +36,7 @@
       {
         "name": "phovea_security_store_generated",
         "repo": "datavisyn/phovea_security_store_generated",
-        "branch": "v11.0.0"
+        "branch": "master"
       },
       {
         "name": "tdp_core",
