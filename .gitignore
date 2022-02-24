@@ -7,9 +7,10 @@ package-lock.json
 
 # ... except all files relevant for the product build
 !/.circleci/
+!/.circleci/*
 !/.github
 !templates/
-!templates/web/
+!templates/web/*
 !templates/web/config
 !templates/web/config/*
 !templates/web/deploy

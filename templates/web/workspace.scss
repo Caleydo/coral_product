@@ -15,6 +15,7 @@
 
 // import all variables scss
 // first default app
+@import "~coral_public/dist/scss/abstracts/variables";
 @import "~coral/dist/scss/abstracts/variables";
 // then going up in the dependency tree from the default app
 @import "~ordino/dist/scss/abstracts/variables";
@@ -38,3 +39,4 @@
 @import "~tdp_core/dist/scss/main";
 @import "~ordino/dist/scss/main";
 @import "~coral/dist/scss/main";
+@import "~coral_public/dist/scss/main";
