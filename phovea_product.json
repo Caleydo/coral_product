@@ -3,22 +3,22 @@
     "type": "web",
     "label": "coral_frontend",
     "repo": "Caleydo/coral_public",
-    "branch": "main",
+    "branch": "v1.2.0",
     "additional": [
       {
         "name": "coral",
         "repo": "Caleydo/coral",
-        "branch": "release_1.2"
+        "branch": "v1.2.0"
       },
       {
         "name": "phovea_security_store_generated",
         "repo": "datavisyn/phovea_security_store_generated",
-        "branch": "master"
+        "branch": "v11.0.1"
       },
       {
         "name": "tdp_core",
         "repo": "datavisyn/tdp_core",
-        "branch": "develop"
+        "branch": "a5e94b6239635eb362ce243ab31902fd30111cda"
       }
     ]
   },
@@ -26,27 +26,27 @@
     "type": "api",
     "label": "coral_backend",
     "repo": "phovea/phovea_server",
-    "branch": "develop",
+    "branch": "3047e8fddc8d8829ca840e3431540b0c73a64eef",
     "additional": [
       {
         "name": "coral",
         "repo": "Caleydo/coral",
-        "branch": "release_1.2"
+        "branch": "v1.2.0"
       },
       {
         "name": "phovea_security_store_generated",
         "repo": "datavisyn/phovea_security_store_generated",
-        "branch": "master"
+        "branch": "v11.0.1"
       },
       {
         "name": "tdp_core",
         "repo": "datavisyn/tdp_core",
-        "branch": "develop"
+        "branch": "a5e94b6239635eb362ce243ab31902fd30111cda"
       },
       {
         "name": "tdp_publicdb",
         "repo": "Caleydo/tdp_publicdb",
-        "branch": "develop"
+        "branch": "38fa1ae580586df40c5fcb55b0057c9da2487cb5"
       }
     ]
   }
