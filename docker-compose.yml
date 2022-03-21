@@ -1,0 +1,14 @@
+version: '2.0'
+services:
+  web:
+    image: 3a02959a53eb
+    ports: 
+      - '80:80'
+    depends_on:
+      - api
+    volumes:
+      - './clientConfig.json:/usr/share/nginx/html/clientConfig.json'
+  api:
+    image: 30f2b0f9ebbf
+    ports:
+      - '9000:80'

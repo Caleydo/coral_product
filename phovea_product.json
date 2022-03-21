@@ -8,7 +8,7 @@
       {
         "name": "coral",
         "repo": "Caleydo/coral",
-        "branch": "develop"
+        "branch": "client_config"
       },
       {
         "name": "phovea_security_store_generated",
@@ -31,7 +31,7 @@
       {
         "name": "coral",
         "repo": "Caleydo/coral",
-        "branch": "develop"
+        "branch": "client_config"
       },
       {
         "name": "phovea_security_store_generated",
