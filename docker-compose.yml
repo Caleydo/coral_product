@@ -1,7 +1,7 @@
 version: '2.0'
 services:
   web:
-    image: 3a02959a53eb
+    image: coral/coral_frontend:3.0.0
     ports: 
       - '80:80'
     depends_on:
@@ -9,6 +9,6 @@ services:
     volumes:
       - './clientConfig.json:/usr/share/nginx/html/clientConfig.json'
   api:
-    image: 30f2b0f9ebbf
+    image: coral/coral_backend:3.0.0
     ports:
       - '9000:80'
