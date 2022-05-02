@@ -3,12 +3,12 @@
     "type": "web",
     "label": "coral_frontend",
     "repo": "Caleydo/coral_public",
-    "branch": "v1.2.0",
+    "branch": "v2.0.0",
     "additional": [
       {
         "name": "coral",
         "repo": "Caleydo/coral",
-        "branch": "v2.0.0"
+        "branch": "v2.0.1"
       },
       {
         "name": "phovea_security_store_generated",
@@ -31,7 +31,7 @@
       {
         "name": "coral",
         "repo": "Caleydo/coral",
-        "branch": "v2.0.0"
+        "branch": "v2.0.1"
       },
       {
         "name": "phovea_security_store_generated",
