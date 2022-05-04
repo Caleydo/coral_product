@@ -14,30 +14,29 @@ const quiet = argv.quiet !== undefined;
 
 const now = new Date();
 const prefix = (n) => n < 10 ? ('0' + n) : n.toString();
-const buildId = `${now.getUTCFullYear()}${prefix(now.getUTCMonth() + 1)}${prefix(now.getUTCDate())}-${prefix(now.getUTCHours())}${prefix(now.getUTCMinutes())}${prefix(now.getUTCSeconds())}`;
+const buildId = `${now.getUTCFullYear()}${prefix(now.getUTCMonth()+1)}${prefix(now.getUTCDate())}-${prefix(now.getUTCHours())}${prefix(now.getUTCMinutes())}${prefix(now.getUTCSeconds())}`;
 pkg.version = pkg.version.replace('SNAPSHOT', buildId);
 const env = Object.assign({}, process.env);
 const productName = pkg.name.replace('_product', '');
 
 function showHelp(steps, chain) {
   console.info(`node build.js <options> -- step1 step2
- possible options:
-  * --quiet         ... reduce log messages
-  * --serial        ... build elements sequentially
-  * --skipTests     ... skip tests: will set the environment variable PHOVEA_SKIP_TESTS
-  * --injectVersion ... injects the product version into the package.json of the built component
-  * --useSSH        ... clone via ssh instead of https
-  * --skipCleanUp   ... skip cleaning up old docker images
-  * --skipSaveImage ... skip saving the generated docker images
-  * --pushTo        ... push docker images to the given registry
-  * --noDefaultTags ... do not push generated default tag :<timestamp>
-  * --pushExtra     ... push additional custom tag: e.g., --pushExtra=develop
-  * --forceLabel    ... force to use the label even only a single service exists
-  * --dryRun        ... just compute chain no execution
-  * --help          ... show this help message
- 
- arguments: (starting with --!) optional list of steps to execute in the given order (expert mode) by default the default chain is executed
-  `);
+possible options:
+ * --quiet         ... reduce log messages
+ * --serial        ... build elements sequentially
+ * --skipTests     ... skip tests: will set the environment variable PHOVEA_SKIP_TESTS
+ * --injectVersion ... injects the product version into the package.json of the built component
+ * --useSSH        ... clone via ssh instead of https
+ * --skipCleanUp   ... skip cleaning up old docker images
+ * --skipSaveImage ... skip saving the generated docker images
+ * --pushTo        ... push docker images to the given registry
+ * --noDefaultTags ... do not push generated default tag :<timestamp>
+ * --pushExtra     ... push additional custom tag: e.g., --pushExtra=develop
+ * --forceLabel    ... force to use the label even only a single service exists
+ * --dryRun        ... just compute chain no execution
+ * --help          ... show this help message
+arguments: (starting with --!) optional list of steps to execute in the given order (expert mode) by default the default chain is executed
+ `);
 
   steps = Object.keys(steps);
   const primary = steps.filter((d) => !d.includes(':')).sort((a, b) => a.localeCompare(b));
@@ -191,7 +190,7 @@ function spawn(cmd, args, opts) {
   const spawn = require('child_process').spawn;
   const _ = require('lodash');
   return new Promise((resolve, reject) => {
-    const p = spawn(cmd, typeof args === 'string' ? args.split(' ') : args, _.merge({ stdio: argv.quiet ? ['ignore', 'pipe', 'pipe'] : ['ignore', 1, 2] }, opts));
+    const p = spawn(cmd, typeof args === 'string' ? args.split(' ') : args, _.merge({stdio: argv.quiet ? ['ignore', 'pipe', 'pipe'] : ['ignore', 1, 2]}, opts));
     const out = [];
     if (p.stdout) {
       p.stdout.on('data', (chunk) => out.push(chunk));
@@ -224,7 +223,7 @@ function spawn(cmd, args, opts) {
 function npm(cwd, cmd) {
   console.log(cwd, chalk.blue('running npm', cmd));
   const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
-  return spawn(npm, (cmd || 'install').split(' '), { cwd, env });
+  return spawn(npm, (cmd || 'install').split(' '), {cwd, env});
 }
 
 /**
@@ -235,13 +234,13 @@ function npm(cwd, cmd) {
  */
 function docker(cwd, cmd) {
   console.log(cwd, chalk.blue('running docker', cmd));
-  return spawn('docker', (cmd || 'build .').split(' '), { cwd, env });
+  return spawn('docker', (cmd || 'build .').split(' '), {cwd, env});
 }
 
 function dockerSave(image, target) {
   console.log(chalk.blue(`running docker save ${image} | gzip > ${target}`));
   const spawn = require('child_process').spawn;
-  const opts = { env };
+  const opts = {env};
   return new Promise((resolve, reject) => {
     const p = spawn('docker', ['save', image], opts);
     const p2 = spawn('gzip', [], opts);
@@ -258,14 +257,14 @@ function dockerSave(image, target) {
 function dockerRemoveImages() {
   console.log(chalk.blue(`docker images | grep ${productName} | awk '{print $1":"$2}') | xargs --no-run-if-empty docker rmi`));
   const spawn = require('child_process').spawn;
-  const opts = { env };
+  const opts = {env};
   return new Promise((resolve) => {
     const p = spawn('docker', ['images'], opts);
     const p2 = spawn('grep', [productName], opts);
     p.stdout.pipe(p2.stdin);
     const p3 = spawn('awk', ['{print $1":"$2}'], opts);
     p2.stdout.pipe(p3.stdin);
-    const p4 = spawn('xargs', ['--no-run-if-empty', 'docker', 'rmi'], { env, stdio: [p3.stdout, 1, 2] });
+    const p4 = spawn('xargs', ['--no-run-if-empty', 'docker', 'rmi'], {env, stdio: [p3.stdout, 1, 2]});
     p4.on('close', (code) => {
       if (code === 0) {
         resolve();
@@ -296,7 +295,7 @@ function createQuietTerminalAdapter() {
 function yo(generator, options, cwd, args) {
   const yeoman = require('yeoman-environment');
   // call yo internally
-  const yeomanEnv = yeoman.createEnv([], { cwd, env }, quiet ? createQuietTerminalAdapter() : undefined);
+  const yeomanEnv = yeoman.createEnv([], {cwd, env}, quiet ? createQuietTerminalAdapter() : undefined);
   const _args = Array.isArray(args) ? args.join(' ') : args || '';
   return new Promise((resolve, reject) => {
     try {
@@ -427,21 +426,17 @@ function patchWorkspace(p) {
     fs.copyFileSync('./phovea.js', p.tmpDir + '/phovea.js');
 
     registry += `\n\n
-     import {register} from 'tdp_core/src/plugin';
-     register('__product',require('./phovea.js'));
-     `;
+    import {register} from 'tdp_core/src/plugin';
+    register('__product',require('./phovea.js'));
+    `;
     fs.writeFileSync(p.tmpDir + '/phovea_registry.js', registry);
   }
+  
   //copy template files of product to workspace of product
-  if (fs.existsSync(`./templates/${p.type}/deploy/${p.label}`)) {
-    console.log(`Copy deploy files from`, `./templates/${p.type}/deploy/${p.label}`, `to`, `${p.tmpDir}/deploy/${p.label}`);
-    fs.copySync(`./templates/${p.type}/deploy/${p.label}`, `${p.tmpDir}/deploy/${p.label}`);
-  } else if (fs.existsSync(`./templates/${p.type}`)) {
+  if (fs.existsSync(`./templates/${p.type}`)) {
     console.log(`Copy deploy files from`, `./templates/${p.type}`, `to`, `${p.tmpDir}/`);
-    fs.copySync(`./templates/${p.type}`, `${p.tmpDir}/`);
+    fs.copySync(`./templates/${p.type}`, p.tmpDir);
   }
-
-
 }
 
 function mergeCompose(composePartials) {
@@ -513,7 +508,7 @@ function pushImages(images) {
 
   const tags = [];
   if (!argv.noDefaultTags) {
-    tags.push(...images.map((image) => ({ image, tag: `${dockerRepository}/${image}` })));
+    tags.push(...images.map((image) => ({image, tag: `${dockerRepository}/${image}`})));
   }
   if (argv.pushExtra) { // push additional custom prefix without the version
     tags.push(...images.map((image) => ({
@@ -531,7 +526,7 @@ function pushImages(images) {
 function loadPatchFile() {
   const existsYaml = fs.existsSync('./docker-compose-patch.yaml');
   if (!existsYaml && !fs.existsSync('./docker-compose-patch.yml')) {
-    return { services: {} };
+    return {services: {}};
   }
   const content = fs.readFileSync(existsYaml ? './docker-compose-patch.yaml' : './docker-compose-patch.yml');
   const yaml = require('yamljs');
@@ -683,7 +678,7 @@ function showWebDependencies(p) {
 }
 
 function cleanUpWebDependencies(p) {
-  return fs.emptyDirAsync(`${p.tmpDir}/node_modules`);
+  return fs.emptyDirAsync(`${p.tmpDir}/node_modules` );
 }
 
 function resolvePluginTypes(p) {
@@ -704,31 +699,34 @@ function buildWeb(p) {
 
 function installPythonTestDependencies(p) {
   console.log(chalk.yellow('create test environment'));
-  return spawn('pip', 'install --no-cache-dir -r requirements.txt', { cwd: p.tmpDir })
-    .then(() => spawn('pip', 'install --no-cache-dir -r requirements_dev.txt', { cwd: p.tmpDir }));
+  return spawn('pip', 'install --no-cache-dir -r requirements.txt', {cwd: p.tmpDir})
+    .then(() => spawn('pip', 'install --no-cache-dir -r requirements_dev.txt', {cwd: p.tmpDir}));
 }
 
 function showPythonTestDependencies(p) {
   // since this function is for debug purposes only, we catch possible errors and resolve it with status code `0`.
-  return spawn('pip', 'list', { cwd: p.tmpDir })
+  return spawn('pip', 'list', {cwd: p.tmpDir})
     .catch(() => Promise.resolve(0)); // status code = 0
 }
 
 function buildServer(p) {
-  let act = npm(`${p.tmpDir}/${p.name}`, `run build${p.isHybridType ? ':python' : ''}`);
+  let act = spawn('make', ['build'], {cwd: `${p.tmpDir}/${p.name}`, env});
   for (const pi of p.additional) {
-    act = act.then(() => npm(`${p.tmpDir}/${pi.name}`, `run build${pi.isHybridType ? ':python' : ''}`));
+    act = act.then(() => spawn('make', ['build'], {cwd: `${p.tmpDir}/${pi.name}`, env}));
   }
 
   // copy all together
   act = act
-    .then(() => fs.ensureDirAsync(`${p.tmpDir}/build/source`))
-    .then(() => fs.copyAsync(`${p.tmpDir}/${p.name}/build/source`, `${p.tmpDir}/build/source/`))
-    .then(() => Promise.all(p.additional.map((pi) => fs.copyAsync(`${p.tmpDir}/${pi.name}/build/source`, `${p.tmpDir}/build/source/`))));
+    .then(() => fs.ensureDirAsync(`${p.tmpDir}/build/lib`))
+    .then(() => fs.copyAsync(`${p.tmpDir}/${p.name}/build/lib`, `${p.tmpDir}/build/source/`))
+    .then(() => fs.copyAsync(`${p.tmpDir}/${p.name}/${p.name.toLowerCase()}.egg-info`, `${p.tmpDir}/build/source/${p.name.toLowerCase()}.egg-info`))
+    .then(() => Promise.all(p.additional.map((pi) => fs.copyAsync(`${p.tmpDir}/${pi.name}/build/lib`, `${p.tmpDir}/build/source/`))))
+    .then(() => Promise.all(p.additional.map((pi) => fs.copyAsync(`${p.tmpDir}/${pi.name}/${pi.name.toLowerCase()}.egg-info`, `${p.tmpDir}/build/source/${pi.name.toLowerCase()}.egg-info`))));
 
   return act;
 }
 
+// TODO: Check if this is used anywhere, as it should be part of the new build process.
 function downloadServerDataFiles(p) {
   if (!argv.serial) {
     return Promise.all(p.data.map((d) => downloadDataFile(d, `${p.tmpDir}/build/source/_data`, p.tmpDir)));
@@ -835,7 +833,7 @@ if (require.main === module) {
     }
 
     const needsWorkspace = isWeb || isServer;
-    if (needsWorkspace) {
+    if(needsWorkspace) {
       steps[`prepare:${suffix}`] = () => catchProductBuild(p, createWorkspace(p));
     }
 
@@ -852,7 +850,7 @@ if (require.main === module) {
     steps[`image:${suffix}`] = () => catchProductBuild(p, buildDockerImage(p));
     steps[`save:${suffix}`] = () => catchProductBuild(p, dockerSave(p.image, `build/${p.label}_image.tar.gz`));
 
-    if (needsWorkspace) {
+    if(needsWorkspace) {
       subSteps.push(`prepare:${suffix}`);
     }
     subSteps.push(`install:${suffix}`);
