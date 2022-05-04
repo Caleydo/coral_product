@@ -3,7 +3,7 @@
     "type": "web",
     "label": "coral_frontend",
     "repo": "Caleydo/coral_public",
-    "branch": "main",
+    "branch": "develop",
     "additional": [
       {
         "name": "coral",
@@ -25,7 +25,7 @@
   {
     "type": "api",
     "label": "coral_backend",
-    "repo": "phovea/phovea_server",
+    "repo": "datavisyn/tdp_core",
     "branch": "develop",
     "additional": [
       {
@@ -36,11 +36,6 @@
       {
         "name": "phovea_security_store_generated",
         "repo": "datavisyn/phovea_security_store_generated",
-        "branch": "develop"
-      },
-      {
-        "name": "tdp_core",
-        "repo": "datavisyn/tdp_core",
         "branch": "develop"
       },
       {
