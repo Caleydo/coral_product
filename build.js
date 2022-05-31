@@ -97,7 +97,7 @@
  
  function toRepoUrlWithUser(url) {
    const repo = toRepoUrl(url);
-   if (repo.startsWith('git@')) { // ssh
+   if (repo.startsWith('git+ssh@')) { // ssh
      return repo;
    }
    const usernameAndPassword = guessUserName(repo);
