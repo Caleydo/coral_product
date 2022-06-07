@@ -44,5 +44,11 @@
         "branch": "develop"
       }
     ]
+  },
+  {
+    "type": "api",
+    "label": "coral_compare",
+    "repo": "jku-vds-lab/kokiri",
+    "branch": "main"
   }
 ]
