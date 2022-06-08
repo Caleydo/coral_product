@@ -17,7 +17,7 @@
     "url": "https://github.com/Caleydo/coral_product.git"
   },
   "scripts": {
-    "build": "node build.js --skipTests --skipSaveImage --useSSH",
+    "build": "node build.js --skipTests --skipSaveImage --useSSH --serial",
     "predist": "npm run build",
     "dist": "mkdirp dist && cd build && tar cvzf ../dist/coral_product.tar.gz *"
   },
