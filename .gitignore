@@ -21,6 +21,8 @@ package-lock.json
 !templates/api/deploy
 !templates/api/deploy/api
 !templates/api/deploy/api/*
+!templates/api/deploy/kokiri
+!templates/api/deploy/kokiri/*
 !.editorconfig
 !.gitattributes
 !.yo-rc.json
