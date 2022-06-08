@@ -44,5 +44,11 @@
         "branch": "develop"
       }
     ]
+  },
+  {
+    "type": "api",
+    "label": "kokiri",
+    "repo": "jku-vds-lab/kokiri",
+    "branch": "main"
   }
 ]
