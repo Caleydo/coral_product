@@ -114,6 +114,7 @@ workflows:
             branches:
               only:
                 - develop
+                - cht-cmp
     jobs:
       - build:
           context:
