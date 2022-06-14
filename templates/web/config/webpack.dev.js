@@ -147,7 +147,8 @@ const config = {
                 },
                 '/kokiri/*': {
                     target: 'http://localhost:9666',
-                    secure: false
+                    secure: false,
+                    ws: true
                 },
                 // Append on bottom to allow override of exact key matches like /api/*
                 ...workspaceProxy
