@@ -18,7 +18,7 @@
       {
         "name": "tdp_core",
         "repo": "datavisyn/tdp_core",
-        "branch": "mp/add_d3v7"
+        "branch": "develop"
       }
     ]
   },
@@ -26,7 +26,7 @@
     "type": "api",
     "label": "coral_backend",
     "repo": "datavisyn/tdp_core",
-    "branch": "mp/add_d3v7",
+    "branch": "develop",
     "additional": [
       {
         "name": "coral",
@@ -41,7 +41,7 @@
       {
         "name": "tdp_publicdb",
         "repo": "Caleydo/tdp_publicdb",
-        "branch": "thinkh/d3_changes"
+        "branch": "develop"
       }
     ]
   },
