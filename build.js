@@ -220,10 +220,9 @@ function spawn(cmd, args, opts) {
  * @param cmd the command to execute as a string
  * @return {*}
  */
-function npm(cwd, cmd) {
-  console.log(cwd, chalk.blue('running npm', cmd));
-  const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
-  return spawn(npm, (cmd || 'install').split(' '), {cwd, env});
+function yarn(cwd, cmd) {
+  console.log(cwd, chalk.blue('running yarn', cmd));
+  return spawn('yarn', (cmd || 'install').split(' '), {cwd, env});
 }
 
 /**
@@ -667,13 +666,13 @@ function createWorkspace(p) {
 }
 
 function installWebDependencies(p) {
-  return npm(p.tmpDir, 'install');
+  return yarn(p.tmpDir, 'install --no-immutable');
 }
 
 function showWebDependencies(p) {
   // `npm ls` fails if some peerDependencies are not installed
   // since this function is for debug purposes only, we catch possible errors of `npm()` and resolve it with status code `0`.
-  return npm(p.tmpDir, 'list --depth=1')
+  return yarn(p.tmpDir, 'info --recursive --dependents')
     .catch(() => Promise.resolve(0)); // status code = 0
 }
 
@@ -692,7 +691,7 @@ function resolvePluginTypes(p) {
 }
 
 function buildWeb(p) {
-  const step = npm(p.tmpDir, `run dist`);
+  const step = yarn(p.tmpDir, `run dist`);
   // move to target directory
   return step.then(() => fs.renameAsync(`${p.tmpDir}/dist/bundles.tar.gz`, `./build/${p.label}.tar.gz`));
 }
