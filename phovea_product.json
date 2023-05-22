@@ -3,22 +3,22 @@
     "type": "web",
     "label": "coral_frontend",
     "repo": "Caleydo/coral_public",
-    "branch": "visyn_scripts",
+    "branch": "develop",
     "additional": [
       {
         "name": "coral",
         "repo": "Caleydo/coral",
-        "branch": "visyn_scripts"
+        "branch": "develop"
       },
       {
         "name": "phovea_security_store_generated",
         "repo": "datavisyn/phovea_security_store_generated",
-        "branch": "visyn_scripts"
+        "branch": "develop"
       },
       {
         "name": "tdp_core",
         "repo": "datavisyn/tdp_core",
-        "branch": "visyn_scripts"
+        "branch": "develop"
       }
     ]
   },
@@ -26,22 +26,22 @@
     "type": "api",
     "label": "coral_backend",
     "repo": "datavisyn/tdp_core",
-    "branch": "visyn_scripts",
+    "branch": "develop",
     "additional": [
       {
         "name": "coral",
         "repo": "Caleydo/coral",
-        "branch": "visyn_scripts"
+        "branch": "develop"
       },
       {
         "name": "phovea_security_store_generated",
         "repo": "datavisyn/phovea_security_store_generated",
-        "branch": "visyn_scripts"
+        "branch": "develop"
       },
       {
         "name": "tdp_publicdb",
         "repo": "Caleydo/tdp_publicdb",
-        "branch": "visyn_scripts"
+        "branch": "develop"
       }
     ]
   }
