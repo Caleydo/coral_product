@@ -22,7 +22,6 @@
 @import "~tdp_core/dist/scss/abstracts/variables";
 
 // then all other plugins in this workspace (excluding other apps)
-@import "~tdp_gene/dist/scss/abstracts/variables";
 @import "~tdp_publicdb/dist/scss/abstracts/variables";
 @import "~tourdino/dist/scss/abstracts/variables";
 @import "~tdp_core/dist/scss/fontawesome";
@@ -34,7 +33,6 @@
 // all main scss (in opposite order of the variables scss
 @import "~tourdino/dist/scss/main";
 @import "~tdp_publicdb/dist/scss/main";
-@import "~tdp_gene/dist/scss/main";
 @import "~tdp_core/dist/scss/main";
 @import "~ordino/dist/scss/main";
 @import "~coral/dist/scss/main";

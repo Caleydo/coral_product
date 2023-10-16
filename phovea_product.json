@@ -3,22 +3,22 @@
     "type": "web",
     "label": "coral_frontend",
     "repo": "Caleydo/coral_public",
-    "branch": "develop",
+    "branch": "v4.0.0",
     "additional": [
       {
         "name": "coral",
         "repo": "Caleydo/coral",
-        "branch": "develop"
+        "branch": "comparison_2023"
       },
       {
         "name": "phovea_security_store_generated",
         "repo": "datavisyn/phovea_security_store_generated",
-        "branch": "develop"
+        "branch": "v15.0.0"
       },
       {
         "name": "tdp_core",
         "repo": "datavisyn/tdp_core",
-        "branch": "develop"
+        "branch": "v20.0.0"
       }
     ]
   },
@@ -26,23 +26,29 @@
     "type": "api",
     "label": "coral_backend",
     "repo": "datavisyn/tdp_core",
-    "branch": "develop",
+    "branch": "v20.0.0",
     "additional": [
       {
         "name": "coral",
         "repo": "Caleydo/coral",
-        "branch": "develop"
+        "branch": "comparison_2023"
       },
       {
         "name": "phovea_security_store_generated",
         "repo": "datavisyn/phovea_security_store_generated",
-        "branch": "develop"
+        "branch": "v15.0.0"
       },
       {
         "name": "tdp_publicdb",
         "repo": "Caleydo/tdp_publicdb",
-        "branch": "develop"
+        "branch": "v14.0.0"
       }
     ]
+  },
+  {
+    "type": "api",
+    "label": "kokiri",
+    "repo": "jku-vds-lab/kokiri",
+    "branch": "main"
   }
 ]
